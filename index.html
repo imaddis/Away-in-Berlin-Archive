@@ -467,6 +467,7 @@
             <option value="missing">Missing</option>
             <option value="available">Available</option>
             <option value="decay">Decay</option>
+            <option value="random">Randomize</option>
           </select>
         </div>
         <div class="filter-group">
@@ -542,7 +543,11 @@
   </div>
 
   <div class="menu-nav-item">
-    <a href="#" class="menu-nav-link">S21+</a>
+    <a href="#" class="menu-nav-link">The Device</a>
+  </div>
+
+  <div class="menu-nav-item">
+    <a href="#" class="menu-nav-link">Physical Artifacts</a>
   </div>
 </div>
 
@@ -13437,11 +13442,10 @@
   let activeVibe  = "";
   let searchQuery = "";
   let viewScale   = "small";
+  let activeTag   = "";
 
   function getFilteredItems() {
-    return items.filter(item => {
-      // If no filters selected, show everything
-      // If filters selected, only show items whose type OR category is in the active set
+    let filtered = items.filter(item => {
       const filterMatch = activeFilters.size === 0 || 
         activeFilters.has(item.type) || 
         activeFilters.has(item.category);
@@ -13450,8 +13454,25 @@
         item.title.toLowerCase().includes(searchQuery) ||
         item.tags.some(t => t.toLowerCase().includes(searchQuery)) ||
         item.category.toLowerCase().includes(searchQuery);
-      return filterMatch && vibeMatch && searchMatch;
+
+      // View filter
+      let viewMatch = true;
+      if (activeView === "decay") viewMatch = item.type === "screenshot";
+      else if (activeView === "available") viewMatch = item.src.includes("cloudinary");
+      else if (activeView === "missing") viewMatch = !item.src.includes("cloudinary");
+
+      // Tag filter
+      const tagMatch = !activeTag || item.tags.map(t => t.toLowerCase()).includes(activeTag.toLowerCase());
+
+      return filterMatch && vibeMatch && searchMatch && viewMatch && tagMatch;
     });
+
+    // Randomize
+    if (activeView === "random") {
+      filtered = [...filtered].sort(() => Math.random() - 0.5);
+    }
+
+    return filtered;
   }
 
   function renderGrid() {
@@ -13504,7 +13525,8 @@
   }
 
   function updateCount(n) {
-    document.getElementById("itemCount").textContent = `${n} items`;
+    const tagLabel = activeTag ? ` · #${activeTag}` : "";
+    document.getElementById("itemCount").textContent = `${n} items${tagLabel}`;
   }
 
   function renderArchiveList(filtered) {
@@ -13540,8 +13562,17 @@
       <div class="detail-meta-row"><strong>Category</strong>${item.category}</div>
       <div class="detail-meta-row"><strong>Located on</strong>${item.location}</div>
       <div class="detail-meta-row"><strong>Vibe</strong>${item.vibe}</div>
-      <div class="detail-tags">${item.tags.map(t => `<span class="detail-tag">${t}</span>`).join("")}</div>
+      <div class="detail-tags">${item.tags.map(t => `<span class="detail-tag" data-tag="${t}">${t}</span>`).join("")}</div>
     `;
+
+    // Make tags clickable
+    document.querySelectorAll(".detail-tag[data-tag]").forEach(el => {
+      el.addEventListener("click", () => {
+        activeTag = el.dataset.tag;
+        closeDetail();
+        renderGrid();
+      });
+    });
 
     const mediaHTML = item.type === "video"
       ? `<video src="${item.src}" controls style="width:100%; max-width:480px;"></video>`
@@ -13604,7 +13635,11 @@
   document.getElementById("viewSelect").addEventListener("change", e => { activeView = e.target.value; renderGrid(); });
   document.getElementById("vibeSelect").addEventListener("change", e => { activeVibe = e.target.value; renderGrid(); });
   document.getElementById("scaleSelect").addEventListener("change", e => { viewScale = e.target.value; renderGrid(); });
-  document.getElementById("searchInput").addEventListener("input", e => { searchQuery = e.target.value.toLowerCase().trim(); renderGrid(); });
+  document.getElementById("searchInput").addEventListener("input", e => { 
+    searchQuery = e.target.value.toLowerCase().trim(); 
+    activeTag = "";
+    renderGrid(); 
+  });
 
   renderGrid();
 </script>
