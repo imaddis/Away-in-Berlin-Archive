@@ -173,13 +173,24 @@
       opacity: 0;
     }
 
+    .card-image.has-broken::before {
+      content: '⬚';
+      position: absolute;
+      top: 6px;
+      right: 8px;
+      font-size: 16px;
+      color: var(--black);
+      opacity: 0.4;
+      z-index: 1;
+    }
+
     .card-image.has-broken::after {
       content: attr(data-filename);
       display: block;
       position: absolute;
       top: 6px;
       left: 6px;
-      right: 6px;
+      right: 24px;
       font-family: var(--font-mono);
       font-size: 8px;
       color: var(--black);
@@ -13588,13 +13599,22 @@
         card.addEventListener("mouseleave", () => { vid.pause(); vid.currentTime = 0; });
       }
 
-      // Detect broken images
+      // Detect broken images and videos
       if (item.type !== "video") {
         const img = card.querySelector("img");
         const cardImage = card.querySelector(".card-image");
         if (img) {
           img.addEventListener("error", () => {
             img.classList.add("broken");
+            cardImage.classList.add("has-broken");
+            cardImage.setAttribute("data-filename", item.title);
+          });
+        }
+      } else {
+        const vid = card.querySelector("video");
+        const cardImage = card.querySelector(".card-image");
+        if (vid) {
+          vid.addEventListener("error", () => {
             cardImage.classList.add("has-broken");
             cardImage.setAttribute("data-filename", item.title);
           });
