@@ -165,16 +165,12 @@
     }
 
     /* Broken image styling */
-    .card-image img::before {
-      content: '';
-      display: block;
-      position: absolute;
-      inset: 0;
-      background: var(--card-bg);
+    .card-image img.broken {
+      opacity: 0;
     }
 
-    .card-image img::after {
-      content: attr(alt);
+    .card-image.has-broken::after {
+      content: attr(data-filename);
       display: block;
       position: absolute;
       top: 6px;
@@ -185,17 +181,7 @@
       color: var(--black);
       line-height: 1.5;
       word-break: break-word;
-    }
-
-    .card-image img[data-broken]::before {
-      content: '⬚';
-      position: absolute;
-      top: 6px;
-      right: 8px;
-      font-size: 18px;
-      color: #111;
-      opacity: 0.4;
-      background: none;
+      opacity: 0.7;
     }
 
     .card[data-type="screenshot"] .card-image img {
@@ -13601,9 +13587,12 @@
       // Detect broken images
       if (item.type !== "video") {
         const img = card.querySelector("img");
+        const cardImage = card.querySelector(".card-image");
         if (img) {
           img.addEventListener("error", () => {
-            img.setAttribute("data-broken", "true");
+            img.classList.add("broken");
+            cardImage.classList.add("has-broken");
+            cardImage.setAttribute("data-filename", item.title);
           });
         }
       }
