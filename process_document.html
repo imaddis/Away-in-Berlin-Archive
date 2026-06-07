@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Away In Berlin — Process Document</title>
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cyan: #00FFFF;
+      --red: #ED1C24;
+      --gray-light: #E8E8E8;
+      --gray-dark: #555;
+      --black: #111;
+      --font-serif: 'IM Fell English', serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+    }
+
+    html {
+      background: var(--gray-light);
+      color: var(--black);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    body {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 40px;
+    }
+
+    /* ── HEADER ── */
+    .doc-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border-top: 1px solid var(--black);
+      border-bottom: 1px solid var(--black);
+      padding: 24px 0;
+      margin-bottom: 60px;
+    }
+
+    .doc-header-left h1 {
+      font-family: var(--font-serif);
+      font-size: 36px;
+      line-height: 1.1;
+      font-weight: 400;
+    }
+
+    .doc-header-left h1 em { font-style: italic; }
+
+    .doc-header-left .subtitle {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray-dark);
+      margin-top: 8px;
+    }
+
+    .doc-header-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-end;
+      text-align: right;
+      font-size: 10px;
+      color: var(--gray-dark);
+      letter-spacing: 0.06em;
+      gap: 4px;
+    }
+
+    .doc-header-right .label {
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 9px;
+      opacity: 0.6;
+    }
+
+    .doc-header-right a {
+      color: var(--black);
+      text-decoration: underline;
+    }
+
+    .doc-header-right a:hover { opacity: 0.6; }
+
+    /* ── SECTION ── */
+    .section {
+      margin-bottom: 48px;
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 0 32px;
+    }
+
+    .section-label {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--gray-dark);
+      padding-top: 3px;
+      border-top: 1px solid var(--gray-dark);
+    }
+
+    .section-content p {
+      margin-bottom: 14px;
+      font-size: 11.5px;
+      line-height: 1.8;
+    }
+
+    .section-content p:last-child { margin-bottom: 0; }
+
+    .section-content em {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 13px;
+    }
+
+    /* ── CHALLENGES ── */
+    .challenge-list {
+      list-style: none;
+      margin-top: 8px;
+    }
+
+    .challenge-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+      font-size: 11px;
+      line-height: 1.7;
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      gap: 8px;
+    }
+
+    .challenge-list li .bullet {
+      width: 8px;
+      height: 8px;
+      background: var(--red);
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+
+    /* ── TECH STACK ── */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--black);
+      border: 1px solid var(--black);
+      margin-top: 8px;
+    }
+
+    .tech-item {
+      background: var(--gray-light);
+      padding: 12px;
+    }
+
+    .tech-item .tech-name {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+    }
+
+    .tech-item .tech-desc {
+      font-size: 9px;
+      color: var(--gray-dark);
+      line-height: 1.5;
+    }
+
+    /* ── TIMELINE ── */
+    .timeline {
+      margin-top: 8px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 16px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .timeline-phase {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--gray-dark);
+      padding-top: 2px;
+    }
+
+    .timeline-desc {
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+    /* ── CYAN CALLOUT ── */
+    .callout {
+      background: var(--cyan);
+      padding: 20px 24px;
+      margin: 16px 0;
+      font-size: 11px;
+      line-height: 1.7;
+    }
+
+    .callout strong {
+      display: block;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 6px;
+      opacity: 0.6;
+    }
+
+    /* ── FOOTER ── */
+    .doc-footer {
+      border-top: 1px solid var(--black);
+      padding-top: 16px;
+      margin-top: 60px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 9px;
+      color: var(--gray-dark);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* ── PRINT ── */
+    @media print {
+      body { padding: 40px; }
+      .callout { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="doc-header">
+    <div class="doc-header-left">
+      <h1><em>Away</em> In Berlin<br>Archive</h1>
+      <div class="subtitle">Design Process Document</div>
+    </div>
+    <div class="doc-header-right">
+      <span class="label">Course</span>
+      <span>Digital Decay & Afterlives, SFPC</span>
+      <span class="label" style="margin-top:8px;">Year</span>
+      <span>Summer 2026</span>
+      <span class="label" style="margin-top:8px;">URL</span>
+      <a href="https://imaddis.github.io/Away-in-Berlin-Archive/" target="_blank">imaddis.github.io/Away-in-Berlin-Archive</a>
+    </div>
+  </div>
+
+  <!-- CONCEPT -->
+  <div class="section">
+    <div class="section-label">Concept</div>
+    <div class="section-content">
+      <p>
+        <em>Away in Berlin</em> is an archive asking, what happens to a memory when it passes from phone to screen, through platforms, and back again? In the summer of 2023, I spent three months studying abroad in Berlin, an important and lively period of my life that I documented obsessively and chaotically through photography, video, and social media. But when I went to revisit those memories, I found something unexpected — many of the images I thought I had saved existed only as degraded Instagram stories or random screenshots, their quality eroded by the very platform I used to share them.
+      </p>
+      <p>
+        This project is an attempt to remember, collect, organize, and present that archive as it actually exists — in its full, sometimes broken state. Low-resolution screenshots sit alongside high-quality camera photos. Missing files appear as gray boxes. The decay, just like memory, is the archive.
+      </p>
+    </div>
+  </div>
+
+  <!-- CALLOUT -->
+  <div class="callout">
+    <strong>Central Question</strong>
+    What does it mean to archive digital memories when the platforms and devices that hosted them don't allow you to retrieve them intact?
+  </div>
+
+  <!-- PROCESS -->
+  <div class="section">
+    <div class="section-label">Process</div>
+    <div class="section-content">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-phase">Wk 1–6</div>
+          <div class="timeline-desc">Lectures and discussions on digital decay and preservation, grounding the course in the understanding that born-digital works erode as their sustaining systems deteriorate. Archival case studies, metadata strategies, and hands-on HTML/CSS exercises introduced frameworks for documenting absence and loss, alongside readings on the ethics of exhibiting incomplete works.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-phase">Week 7</div>
+          <div class="timeline-desc">Defined the concept and scope. Began wireframing in Figma. Explored and ideated the archive's visual language — monospace typography, cyan sidebar, grid-based layout — drawing from museum catalog and database aesthetics.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-phase">Week 8</div>
+          <div class="timeline-desc">Built the initial website, using Claude's assistance for the first time to build HTML, CSS, and JavaScript. Implemented the photo grid, sidebar filters, detail view overlay, and search functionality. Connected the site to GitHub for live hosting via GitHub Pages.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-phase">Week 9</div>
+          <div class="timeline-desc">Curated a selection of 1,152 images and videos from the original collection of 1,700+. Wrote a Python script to automatically scan the images folder and generate a spreadsheet (CSV) with all file metadata. Began manually tagging each item with title, category, vibe, and descriptive tags in Google Sheets.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-phase">Week 10</div>
+          <div class="timeline-desc">Migrated all media to Cloudinary for cloud-based hosting. Updated the website data to reflect real Cloudinary URLs. Resolved multiple Git and file-size conflicts during the push to GitHub. Got the site live with real photos, working filters, and a functional archive.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-phase">Ongoing</div>
+          <div class="timeline-desc">
+            <ul style="list-style:none; padding:0;">
+              <li style="padding: 4px 0; border-bottom: 1px solid rgba(0,0,0,0.08);">— Manually tagging each photo/video item with a title, category, and tags.</li>
+              <li style="padding: 4px 0; border-bottom: 1px solid rgba(0,0,0,0.08);">— Explorations on how to elevate the visual identity.</li>
+              <li style="padding: 4px 0; border-bottom: 1px solid rgba(0,0,0,0.08);">— Problem solving the missing photos that weren't able to upload to Cloudinary.</li>
+              <li style="padding: 4px 0; border-bottom: 1px solid rgba(0,0,0,0.08);">— Upload photos taken on film cameras and digital cameras to the archive.</li>
+              <li style="padding: 4px 0; border-bottom: 1px solid rgba(0,0,0,0.08);">— Build The Device page with 3D rotating model of the Samsung S21+.</li>
+              <li style="padding: 4px 0; border-bottom: 1px solid rgba(0,0,0,0.08);">— Build the Physical Artifacts page.</li>
+              <li style="padding: 4px 0;">— Connect custom domain via GoDaddy.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TECHNICAL -->
+  <div class="section">
+    <div class="section-label">Technical Stack</div>
+    <div class="section-content">
+      <div class="tech-grid">
+        <div class="tech-item">
+          <div class="tech-name">HTML / CSS / JS</div>
+          <div class="tech-desc">Core website built without frameworks. Chosen for simplicity, full control, and learning value.</div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-name">GitHub Pages</div>
+          <div class="tech-desc">Free static site hosting connected directly to the VS Code project via Git version control.</div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-name">Cloudinary</div>
+          <div class="tech-desc">Cloud storage and delivery for 1,152 media files. Enables fast image loading without bloating the GitHub repository.</div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-name">Python</div>
+          <div class="tech-desc">Used to write automation scripts: scanning the images folder, generating CSVs, and bulk-uploading to Cloudinary via Terminal.</div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-name">Google Sheets</div>
+          <div class="tech-desc">Used as a content management system for tagging and categorizing all 1,152 archive items with titles, categories, vibes, and tags.</div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-name">Claude (Anthropic)</div>
+          <div class="tech-desc">AI assistant used throughout development for writing code, debugging, and learning concepts in plain English.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHALLENGES -->
+  <div class="section">
+    <div class="section-label">Challenges</div>
+    <div class="section-content">
+      <ul class="challenge-list">
+        <li>
+          <div class="bullet"></div>
+          <div><strong>GitHub file size limits.</strong> Attempting to push 1,152 images to GitHub repeatedly failed with HTTP 500 errors. The solution was to migrate all media to Cloudinary and use a .gitignore file to exclude the images folder — keeping GitHub only for code.</div>
+        </li>
+        <li>
+          <div class="bullet"></div>
+          <div><strong>Cloudinary browser upload failures.</strong> Uploading 1,152 files through the browser interface repeatedly timed out and failed after hours of attempts. The final solution was a Python script run through Terminal, which completed the upload reliably without browser timeouts.</div>
+        </li>
+        <li>
+          <div class="bullet"></div>
+          <div><strong>Cloudinary public ID renaming.</strong> On the first upload attempt, Cloudinary appended random suffixes to all filenames, breaking the URL mapping. This required deleting all assets, adjusting the upload preset settings, and re-uploading with the original filenames preserved.</div>
+        </li>
+        <li>
+          <div class="bullet"></div>
+          <div><strong>Filter logic complexity.</strong> Building a filter system that correctly handled both file type (images/video/screenshot) and subject category (food, art, landscape) required multiple iterations to separate the two filter sets and define the correct logic for each.</div>
+        </li>
+        <li>
+          <div class="bullet"></div>
+          <div><strong>Git history conflicts.</strong> After accidentally committing the images folder to Git, every push attempt tried to send 3+ GB of data. The solution was to create a fresh Git branch with no history (--orphan), commit only the HTML file, and force push to the new repository.</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- REFLECTION -->
+  <div class="section">
+    <div class="section-label">Reflection</div>
+    <div class="section-content">
+      <p>
+        Building this archive was itself a lesson on digital decay. Files went missing, uploads failed, and platforms imposed their own logic on my images. The 725 photos that couldn't be uploaded in time by class in week 8, the gray boxes where images should be, the Instagram screenshots that exist only because the platform wouldn't let me download the originals — none of this was planned, most of it was incredibly frustrating, but all of it became part of the work.
+      </p>
+      <p>
+        What surprised me most was how much the technical process mirrored the conceptual one. Every challenge — a Git conflict, a timed-out upload, a renamed file — was a process of deterioration and distortion.
+      </p>
+      <p>
+        I feel very rewarded as I have never coded a complete website before. I didn't do it entirely on my own, but learning about code through the development of an archive has been challenging. Still, it gave me a boost of confidence to use coding as a tool in my creative process going forward. The archive is not complete. It may never be. <em>Away in Berlin</em> was a moment in time.
+      </p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="doc-footer">
+    <span>Away In Berlin Archive — Process Document</span>
+    <span>Digital Decay & Afterlives · SFPC · Summer 2026</span>
+  </div>
+
+</body>
+</html>
