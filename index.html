@@ -13551,7 +13551,14 @@
 
       // View filter
       let viewMatch = true;
-      if (activeView === "decay") viewMatch = item.type === "screenshot";
+      if (activeView === "decay") {
+        const srcLower = item.src.toLowerCase();
+        const filename = srcLower.split('/').pop();
+        viewMatch = item.type === "screenshot" || 
+                    filename.startsWith("screenshot") || 
+                    filename.startsWith("screen_recording") ||
+                    filename.startsWith("screen recording");
+      }
       else if (activeView === "available") viewMatch = item.src.includes("cloudinary");
       else if (activeView === "missing") viewMatch = !item.src.includes("cloudinary");
 
